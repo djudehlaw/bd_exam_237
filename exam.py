@@ -25,6 +25,7 @@ class DataVisualizationApp(QMainWindow):
         self.create_menu()
 
         central_widget = QWidget()
+        hello_widget = QWidget()
         self.setCentralWidget(central_widget)
 
         main_layout = QVBoxLayout(central_widget)
@@ -49,8 +50,8 @@ class DataVisualizationApp(QMainWindow):
     def create_menu(self):
         menubar = self.menuBar()
 
+        hello_widget = menubar.addMenu('hello')
         file_menu = menubar.addMenu('Файл')
-
         load_action = QAction('Загрузить CSV', self)
         load_action.triggered.connect(self.load_csv)
         file_menu.addAction(load_action)
@@ -76,7 +77,7 @@ class DataVisualizationApp(QMainWindow):
 
         self.tabs.addTab(tab, "Статистика")
 
-    
+
 
     def create_tab3(self):
         """Третья вкладка - тепловая карта"""
@@ -240,6 +241,9 @@ class DataVisualizationApp(QMainWindow):
         self.log_text = ""
         self.log_text_edit.clear()
         self.add_to_log("Лог очищен")
+
+    def menu(self):
+        self.stats_text.setText("hello")
 
 
 def main():

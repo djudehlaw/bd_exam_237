@@ -42,7 +42,6 @@ class DataVisualizationApp(QMainWindow):
         main_layout.addWidget(self.tabs)
 
         self.create_tab1()
-        self.create_tab2()
         self.create_tab3()
         self.create_tab4()
         self.create_tab5()
@@ -77,19 +76,7 @@ class DataVisualizationApp(QMainWindow):
 
         self.tabs.addTab(tab, "Статистика")
 
-    def create_tab2(self):
-        tab = QWidget()
-        layout = QVBoxLayout(tab)
-
-        self.corr_btn = QPushButton('Построить график корреляции')
-        self.corr_btn.clicked.connect(self.plot_correlation)
-        layout.addWidget(self.corr_btn)
-
-        self.corr_info = QLabel('График откроется в отдельном окне')
-        self.corr_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(self.corr_info)
-
-        self.tabs.addTab(tab, "Корреляции")
+    
 
     def create_tab3(self):
         """Третья вкладка - тепловая карта"""
@@ -195,26 +182,7 @@ class DataVisualizationApp(QMainWindow):
             self.stats_text.setText(info_text)
             self.add_to_log("Отображена статистика по данным")
 
-    def plot_correlation(self):
-        if self.df is not None:
-            try:
-                numeric_df = self.df.select_dtypes(include=['number'])
-                if numeric_df.shape[1] < 2:
-                    QMessageBox.warning(self, "Предупреждение",
-                                        "Недостаточно числовых столбцов для построения корреляции")
-                    return
 
-                sns.pairplot(numeric_df)
-                plt.suptitle('Графики корреляции числовых параметров', y=1.02)
-                plt.tight_layout()
-                plt.show()
-
-                self.add_to_log("Построен график корреляции числовых параметров")
-
-            except Exception as e:
-                QMessageBox.critical(self, "Ошибка", f"Ошибка при построении графика корреляции: {str(e)}")
-        else:
-            QMessageBox.warning(self, "Предупреждение", "Сначала загрузите данные")
 
     def plot_heatmap(self):
         if self.df is not None:
